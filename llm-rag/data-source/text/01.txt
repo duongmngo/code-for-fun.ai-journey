@@ -1,0 +1,24 @@
+Vietnam IT giant FPT Corp will spend $200 million building an AI Factory that incorporates technology from U.S. chipmaker Nvidia.
+The factory, which will serve as a sovereign cloud, will not produce hardware but instead will focus on AI research and development using Nvidia’s latest technologies, including Nvidia AI Enterprise software and frameworks and Nvidia H100 Tensor Core Graphic Processing Units, FPT said in an press release Tuesday as its leaders sign the partnership with their Nvidia counterparts in Hanoi.
+
+The factory will create applications and solutions on generative AI (a type of AI that can create new content and ideas), autonomous driving and green transformation.
+
+"This empowers FPT to realize the vision of transforming Vietnam into an AI nation and accelerating the adoption of AI applications in Asia, including but not limited to Vietnam, Japan, and Korea."
+
+FPT chairman Truong Gia Binh said that the company’s vision is to "turn Vietnam into an AI hub of the world."
+
+Nvidia vice president of worldwide AI Initiative Keith Strier said: "By accelerating innovation in healthcare, agriculture, climate, manufacturing, and more, AI has the potential to improve lives and strengthen the economies of every nation."
+
+"FPT is working with Nvidia to empower organizations across Vietnam to drive transformation, helping the country become an AI nation," he added.
+
+FPT plans to incorporate Nvidia's training content into university and high school curricula to develop high-tech human resources. The corporation wants to have at least 30,000 students in the program within five years.
+
+As part of the collaboration, FPT has joined the Nvidia Partner Network as a Service Delivery Partner and aims to become a Global Systems Integrator, leveraging the full potential of Nvidia's cutting-edge products and technologies to develop bespoke cloud services, hardware, software, and most importantly, generative AI solutions.
+
+The two companies will develop cloud gamming in Vietnam through Nvidia’s service GeForce Now.
+
+Strier on Monday had a meeting with the Minister of Planning and Investment, Nguyen Chi Dung, which reinforced the efforts in building and developing Vietnam's semiconductor and AI ecosystem.
+
+A source told VnExpress that Nvidia's purpose for this visit to Vietnam is to work with parties to establish a research, development, and training center for AI, install supercomputers, and possibly relocate a portion of graphic processing units production for supercomputers to Vietnam.
+
+Nvidia CEO Jensen Huang in December last year visited Japan, Singapore, Malaysia and Vietnam to look for potential partners. He emphasized that Asia is the new global tech hub and wants to expand his company’s presence here.
