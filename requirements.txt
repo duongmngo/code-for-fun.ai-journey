@@ -3,3 +3,5 @@ langchain-community
 langchain-core
 langchain-text-splitters
 langsmith
+langchain_anthropic
+python-dotenv
