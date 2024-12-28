@@ -4,4 +4,8 @@ langchain-core
 langchain-text-splitters
 langsmith
 langchain_anthropic
+langchain_chroma
 python-dotenv
+sentence_transformers
+langchain-huggingface
+langchain-openai
