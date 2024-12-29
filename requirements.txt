@@ -13,3 +13,5 @@ langchain_text_splitters
 pypdf
 beautifulsoup4
 lxml
+docx
+docx2txt

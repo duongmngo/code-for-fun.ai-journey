@@ -19,8 +19,9 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.vectorstores import InMemoryVectorStore
-from langchain_community.document_loaders import PyPDFLoader, BSHTMLLoader
+from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader
 from langchain_core.documents import Document
+# from docx import Document as DocxDocument
 load_dotenv()
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 # Document loader 
@@ -57,25 +58,39 @@ def create_documents_from_html(html_content):
     text = soup.get_text()
     return [Document(page_content=text)]
 
+def read_docx_files(folder_path):
+    docx_files = glob.glob(os.path.join(folder_path, '*.docx'))
+    documents = []
+    for file_path in docx_files:
+        loader = Docx2txtLoader(file_path)
+        docx_docs = loader.load()
+        documents.extend(docx_docs)
+    return documents
+
 # Example usage
 documents = read_text_files(get_absolute_path(current_dir, './data_source/text'))
 text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=1000, chunk_overlap=200, add_start_index=True
 )
 
-text_documents = []
+split_text_documents = []
 # Print the content of each document
 for i, doc in enumerate(documents):
     documents = text_splitter.create_documents([doc])    
-    text_documents.extend(documents)
+    split_text_documents.extend(documents)
 
 # Load PDF Files
 pdf_documents = []
+split_pdf_documents = []
 pdf_files = get_pdf_files_path(get_absolute_path(current_dir, './data_source/pdf'))
 for pdf_file in pdf_files:
     pdf_loader = PyPDFLoader(pdf_file)
     pages = pdf_loader.load_and_split()
     pdf_documents.extend(pages)
+
+for i, doc in enumerate(pdf_documents):
+    split_docs = text_splitter.create_documents([doc.page_content])
+    split_pdf_documents.extend(split_docs)
 
 # Webite loader
 # read all links from file
@@ -88,14 +103,29 @@ for file_path in website_file_links:
 
 # Load HTML content from links
 html_documents = []
+split_html_documents = []
 for link in website_links:
     html_content = load_html_from_link(link)
     html_docs = create_documents_from_html(html_content)
     html_documents.extend(html_docs)
 
+for doc in html_documents:
+    split_docs = text_splitter.create_documents([doc.page_content])
+    split_html_documents.extend(split_docs)
+
+# Load Docx files
+split_docx_documents = []
+docx_documents = read_docx_files(get_absolute_path(current_dir, './data_source/docx'))
+# Split the content of each docx document and concatenate the results
+for i, doc in enumerate(docx_documents):
+    split_docs = text_splitter.create_documents([doc.page_content])
+    split_docx_documents.extend(split_docs)
+
+
 embedding = EmbeddingFactory.create_embedding(SENTENCE_TRANSFORMER_ALL_MPNET)
+print(f'split_text_documents: {len(split_text_documents)}\nsplit_pdf_documents: {len(split_pdf_documents)}\nsplit_html_documents: {len(split_html_documents)}\nsplit_docx_documents: {len(split_docx_documents)}')
 vectorstore = InMemoryVectorStore.from_documents(
-    text_documents + pdf_documents + html_documents,
+    split_text_documents + split_pdf_documents + split_html_documents + split_docx_documents,
     embedding=embedding,
 )
 
