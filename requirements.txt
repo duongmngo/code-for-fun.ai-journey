@@ -11,3 +11,5 @@ langchain-huggingface
 langchain-openai
 langchain_text_splitters
 pypdf
+beautifulsoup4
+lxml
