@@ -18,6 +18,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.vectorstores import InMemoryVectorStore
+from langchain_community.document_loaders import PyPDFLoader
 load_dotenv()
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 # Document loader 
@@ -35,6 +36,10 @@ def read_text_files(folder_path):
             documents.append(content)
     return documents
 
+def get_pdf_files_path(folder_path):
+    files = glob.glob(os.path.join(folder_path, '*.pdf'))
+    return files
+
 # Example usage
 documents = read_text_files(get_absolute_path(current_dir, './data_source/text'))
 text_splitter = RecursiveCharacterTextSplitter(
@@ -47,9 +52,17 @@ for i, doc in enumerate(documents):
     documents = text_splitter.create_documents([doc])    
     text_documents.extend(documents)
 
+# Load PDF Files
+pdf_documents = []
+pdf_files = get_pdf_files_path(get_absolute_path(current_dir, './data_source/pdf'))
+for pdf_file in pdf_files:
+    pdf_loader = PyPDFLoader(pdf_file)
+    pages = pdf_loader.load_and_split()
+    pdf_documents.extend(pages)
+
 embedding = EmbeddingFactory.create_embedding(SENTENCE_TRANSFORMER_ALL_MPNET)
 vectorstore = InMemoryVectorStore.from_documents(
-    text_documents,
+    text_documents + pdf_documents,
     embedding=embedding,
 )
 
@@ -68,6 +81,14 @@ message = """
 prompt = ChatPromptTemplate.from_messages([("human", message)])
 rag_chain = {"context": retriever, "question": RunnablePassthrough()} | prompt | llm
 
-response = rag_chain.invoke("How much does FPT invest to AI factory?")
-
-print(response.content)
+def main():
+    while True:
+        question = input("\nQuestion: ").strip()
+        
+        if question.lower() == 'quit':
+            print("Goodbye!")
+            break
+            
+        response = rag_chain.invoke(question);
+        print("Answer:", response.content)
+main()

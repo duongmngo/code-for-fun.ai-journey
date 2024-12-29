@@ -10,3 +10,4 @@ sentence_transformers
 langchain-huggingface
 langchain-openai
 langchain_text_splitters
+pypdf
