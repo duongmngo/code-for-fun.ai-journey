@@ -13,5 +13,9 @@ langchain_text_splitters
 pypdf
 beautifulsoup4
 lxml
+langgraph
 docx
 docx2txt
+IPython
+grandalf
+tavily-python
